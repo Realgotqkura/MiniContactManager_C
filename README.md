@@ -1,7 +1,7 @@
 My first small C project:
 
 Features:
- -Command Parser
- -File I/O
+ -Command Parser\n
+ -File I/O\n
  -Persitant Contact Entries
  
