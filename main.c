@@ -5,30 +5,31 @@
 #include "utilities.h"
 
 int parseCommand(const char command[], char string_arr[][MAX_STRING_SIZE]);
+void run();
 
 int main() {
-    char command[256] = "";
-    char string_arr[MAX_ARGUMENTS_SIZE][MAX_STRING_SIZE];
-    printf("Type out a command!\n");
-    printf("Command: ");
-    fgets(command, sizeof(command), stdin);
-
-    size_t len = strlen(command);
-    if (len > 0 && command[len - 1] == '\n') {
-        command[len - 1] = '\0';
-    }
-
-
-    int arg_count = parseCommand(command, string_arr);
-    COMMAND_TYPE get_command = get_command_type(string_arr[0]);
-    execute_command(get_command, &personArr, &person_array_count, string_arr);
-
-
-    if (exit_program == false)
-        main();
-
+    run();
     free(personArr);
     return 0;
+}
+
+void run() {
+    while (!exit_program) {
+        char command[256] = "";
+        char string_arr[MAX_ARGUMENTS_SIZE][MAX_STRING_SIZE];
+        printf("Type out a command!\n");
+        printf("Command: ");
+        fgets(command, sizeof(command), stdin);
+
+        size_t len = strlen(command);
+        if (len > 0 && command[len - 1] == '\n') {
+            command[len - 1] = '\0';
+        }
+
+        int arg_count = parseCommand(command, string_arr);
+        COMMAND_TYPE get_command = get_command_type(string_arr[0]);
+        execute_command(get_command, &personArr, &person_array_count, string_arr);
+    }
 }
 
 
