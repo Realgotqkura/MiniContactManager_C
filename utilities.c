@@ -79,6 +79,23 @@ void execute_command(COMMAND_TYPE type, Person **person_arr, int *person_array_c
             }
             break;
         }
+        case REMOVE:
+            const char *removal_type = string_arr[1];
+
+            Person *new_person_arr = NULL;
+            if (strcmp(removal_type, "name") == 0)
+                new_person_arr = remove_people(personArr, string_arr[2], NAME);
+
+            if (strcmp(removal_type, "phone") == 0)
+                new_person_arr = remove_people(personArr, string_arr[2], PHONE);
+
+            if (strcmp(removal_type, "email") == 0)
+                new_person_arr = remove_people(personArr, string_arr[2], EMAIL);
+
+            if (new_person_arr != NULL)
+                personArr = new_person_arr;
+
+            break;
         default:
             printf("[ERROR] This shouldn't show up!\n");
             exit(1);
@@ -140,6 +157,47 @@ Person *load_contacts(FILE *file) {
     fread(person_arr, sizeof(Person), count, file);
     return person_arr;
 }
+
+/**
+ * Deletes everyone with the matching argument
+ */
+Person *remove_people(Person *personArr, char *argument, PERSON_DATA data) {
+    int matching_count = 0;
+    for (int i = 0; i < person_array_count; i++){
+        if (strcmp(get_player_data_value(data, personArr, i), argument) != 0)
+            continue;
+
+        matching_count++;
+    }
+
+    Person *temp_personArr = malloc(sizeof(Person) * (person_array_count - matching_count));
+
+    int adding_index = 0;
+    for (int i = 0; i < person_array_count;i++) {
+        if (strcmp(get_player_data_value(data, personArr, i), argument) == 0)
+            continue;
+
+        temp_personArr[adding_index] = personArr[i];
+        adding_index++;
+    }
+
+    person_array_count -= matching_count;
+    return temp_personArr;
+}
+
+char *get_player_data_value(PERSON_DATA data, Person *person, int index) {
+    switch (data) {
+        case NAME:
+            return person[index].name;
+        case EMAIL:
+            return person[index].email;
+        case PHONE:
+            return person[index].phone_number;
+    }
+
+    return NULL;
+}
+
 
 
 

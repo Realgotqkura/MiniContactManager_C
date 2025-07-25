@@ -6,7 +6,7 @@
 
 int parseCommand(const char command[], char string_arr[][MAX_STRING_SIZE]);
 
-int main(void) {
+int main() {
     char command[256] = "";
     char string_arr[MAX_ARGUMENTS_SIZE][MAX_STRING_SIZE];
     printf("Type out a command!\n");
@@ -31,9 +31,6 @@ int main(void) {
     return 0;
 }
 
-void reset() {
-
-}
 
 int parseCommand(const char command[], char string_arr[][MAX_STRING_SIZE]){
     int current_argument_index = 0;

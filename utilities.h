@@ -29,6 +29,12 @@ typedef enum {
 
 }COMMAND_TYPE;
 
+typedef enum {
+    NAME,
+    EMAIL,
+    PHONE
+}PERSON_DATA;
+
 extern Person *personArr;
 extern int person_array_count;
 extern const char *file_name;
@@ -40,5 +46,7 @@ void add_command(Person **person_arr, int *person_array_count, const char string
 FILE *openFile(char *file_name, char *mode);
 void save_contacts(FILE *file, int count, Person *person_arr);
 Person *load_contacts(FILE *file);
+char *get_player_data_value(PERSON_DATA data, Person *person, int index);
+Person *remove_people(Person *personArr, char *argument, PERSON_DATA data);
 
 #endif //UTILITIES_H
